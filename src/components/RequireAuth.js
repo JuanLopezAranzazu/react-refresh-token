@@ -2,11 +2,12 @@ import { useLocation, Navigate, Outlet } from "react-router-dom";
 // hooks
 import useAuth from "../hooks/useAuth";
 
+// Componente para verificar si el usuario tiene los roles requeridos
 const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  console.log(auth,auth?.userRoles);
+  console.log(auth, auth?.userRoles);
 
   return auth?.userRoles?.find((role) => allowedRoles?.includes(role)) ? (
     <Outlet />

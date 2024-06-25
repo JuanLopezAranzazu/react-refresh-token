@@ -34,7 +34,7 @@ const Login = () => {
       const userRoles = decodedToken.roles;
       console.log(userRoles);
 
-      setAuth({ accessToken, refreshToken, userRoles });
+      setAuth({ user: email, accessToken, refreshToken, userRoles });
       setEmail("");
       setPassword("");
       navigate(from, { replace: true });

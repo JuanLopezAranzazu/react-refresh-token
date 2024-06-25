@@ -7,6 +7,7 @@ const TOKEN_URL = "/auth/token";
 const useRefreshToken = () => {
   const { auth, setAuth } = useAuth();
 
+  // Refrescar token
   const refresh = async () => {
     const response = await axios.post(
       TOKEN_URL,
@@ -15,6 +16,7 @@ const useRefreshToken = () => {
         headers: { "Content-Type": "application/json" },
       }
     );
+    // Actualizar token de acceso
     setAuth((prev) => {
       console.log(prev);
       console.log(response?.data?.accessToken);

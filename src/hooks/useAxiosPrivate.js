@@ -12,16 +12,18 @@ const useAxiosPrivate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Interceptor para agregar el token de acceso a las peticiones
     const requestIntercept = axios.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
+          config.headers["Authorization"] = `Bearer ${auth?.accessToken}`; // Agregar token de acceso
         }
         return config;
       },
       (error) => Promise.reject(error)
     );
 
+    // Interceptor para refrescar el token de acceso
     const responseIntercept = axios.interceptors.response.use(
       (response) => response,
       async (error) => {
@@ -29,8 +31,9 @@ const useAxiosPrivate = () => {
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
           try {
+            // Refrescar token
             const newAccessToken = await refreshToken();
-            prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+            prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`; // Agregar nuevo token de acceso
             return axios(prevRequest);
           } catch (err) {
             navigate("/login");
